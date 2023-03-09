@@ -3,18 +3,8 @@
   <head>
     <meta charset="UTF-8">
     <title>Circle Calculator</title>
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" />
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <script>
-      function calculate() {
-        var diameter = document.getElementById('diameter').value;
-        var radius = diameter / 2;
-        var area = Math.PI * radius * radius;
-        var circumference = 2 * Math.PI * radius;
-        document.getElementById('area').innerHTML = area.toFixed(2);
-        document.getElementById('circumference').innerHTML = circumference.toFixed(2);
-      }
-    </script>
   </head>
   <body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -26,12 +16,18 @@
       <main class="mdl-layout__content">
         <div class="mdl-grid">
           <div class="mdl-cell mdl-cell--6-col">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" type="number" id="diameter">
-              <label class="mdl-textfield__label" for="diameter">Diameter</label>
-            </div>
-            <br>
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="calculate()">Calculate</button>
+            <form action="/calculate" method="post">
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="number" id="diameter" name="diameter" required>
+                <label class="mdl-textfield__label" for="diameter">Diameter</label>
+              </div>
+              <br>
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Calculate</button>
+            </form>
+            {% if error %}
+              <br>
+              <div class="mdl-color-text--red">{{ error }}</div>
+            {% endif %}
           </div>
           <div class="mdl-cell mdl-cell--6-col">
             <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
@@ -44,11 +40,11 @@
               <tbody>
                 <tr>
                   <td class="mdl-data-table__cell--non-numeric">Area</td>
-                  <td id="area"></td>
+                  <td>{{ area }}</td>
                 </tr>
                 <tr>
                   <td class="mdl-data-table__cell--non-numeric">Circumference</td>
-                  <td id="circumference"></td>
+                  <td>{{ circumference }}</td>
                 </tr>
               </tbody>
             </table>
@@ -58,4 +54,3 @@
     </div>
   </body>
 </html>
-
